@@ -1,0 +1,69 @@
+site_name: Project Documentation
+site_description: Documentação completa do projeto
+site_author: Team
+
+# Repository
+repo_url: https://github.com/your-org/your-repo
+repo_name: your-org/your-repo
+
+# Theme
+theme:
+  name: shadcn
+
+# Navigation
+nav:
+  - Home: index.md
+  - Início Rápido: inicio-rapido.md
+  - Arquitetura:
+      - Visão Geral: arquitetura/visao-geral.md
+      - Guia de Desenvolvimento: arquitetura/guia-desenvolvimento.md
+  - Referências de API:
+      - Visão Geral: api/index.md
+      - Endpoint Exemplo 1: api/endpoint-exemplo-1.md
+      - Endpoint Exemplo 2: api/endpoint-exemplo-2.md
+  - Operações:
+      - Monitoramento: operacoes/monitoramento.md
+      - Troubleshooting: operacoes/troubleshooting.md
+      - Runbooks: operacoes/runbooks.md
+  - Tutoriais:
+      - Visão Geral: tutoriais/index.md
+      - Tutorial Exemplo: tutoriais/tutorial-exemplo.md
+  - FAQ: faq.md
+  - Teste PlantUML: test-plantuml.md
+
+# Plugins
+plugins:
+  - search:
+      lang: 
+        - pt
+        - en
+  - plantuml:
+      puml_url: https://www.plantuml.com/plantuml/
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# Copyright
+copyright: Copyright &copy; 2025 Your Organization
+

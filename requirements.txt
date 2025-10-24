@@ -1,0 +1,6 @@
+mkdocs>=1.6.1
+mkdocs-shadcn>=0.9.7
+mkdocs_puml>=2.3.0
+pymdown-extensions>=10.16.1
+
+
