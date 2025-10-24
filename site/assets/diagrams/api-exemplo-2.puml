@@ -1,0 +1,76 @@
+@startuml
+title POST /users - Criar Novo Usuário
+
+actor Cliente as client
+participant "API Gateway" as gateway
+participant "Auth Service" as auth
+participant "User Service" as user_service
+participant "Validation Service" as validation
+participant "Database" as db
+participant "Event Bus" as event
+participant "Email Service" as email
+
+client -> gateway: POST /api/v1/users\n{name, email, password}
+activate gateway
+
+gateway -> auth: Validate Token & Permissions
+activate auth
+auth --> gateway: Authorized
+deactivate auth
+
+gateway -> user_service: createUser(userData)
+activate user_service
+
+user_service -> validation: validateUserData(userData)
+activate validation
+
+alt Validation Success
+    validation --> user_service: Valid
+    deactivate validation
+    
+    user_service -> db: Check if email exists
+    activate db
+    
+    alt Email Already Exists
+        db --> user_service: User Found
+        deactivate db
+        user_service --> gateway: 422 Email Already Exists
+        gateway --> client: 422 Unprocessable Entity
+    else Email Available
+        db --> user_service: Not Found
+        deactivate db
+        
+        user_service -> user_service: Hash Password
+        
+        user_service -> db: INSERT INTO users (...)
+        activate db
+        db --> user_service: User Created (id, data)
+        deactivate db
+        
+        user_service -> event: Publish UserCreatedEvent
+        activate event
+        event --> user_service: Event Published
+        deactivate event
+        
+        event -> email: UserCreatedEvent
+        activate email
+        email -> email: Send Welcome Email
+        email --> event: Email Sent
+        deactivate email
+        
+        user_service --> gateway: 201 User Created
+        gateway --> client: 201 Created\n{user_data}
+    end
+    
+else Validation Failed
+    validation --> user_service: Validation Errors
+    deactivate validation
+    user_service --> gateway: 422 Validation Failed
+    gateway --> client: 422 Unprocessable Entity\n{validation_errors}
+end
+
+deactivate user_service
+deactivate gateway
+
+@enduml
+
