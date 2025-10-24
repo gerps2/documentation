@@ -2,6 +2,7 @@
 
 Documentação completa do projeto construída com MkDocs e tema shadcn/ui.
 
+
 ## Começando
 
 ### Pré-requisitos
